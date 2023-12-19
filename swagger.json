@@ -1,0 +1,191 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Library",
+    "description": "Library Node.JS Application API",
+    "license": "ISC"
+  },
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "Book",
+      "description": "Api for book in the system"
+    }
+  ],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/book/create": {
+      "post": {
+        "tags": ["Book"],
+        "description": "Create new book in system",
+        "parameters": [
+          {
+            "name": "book",
+            "in": "body",
+            "required": true,
+            "description": "Book that we want to create",
+            "example": {
+              "title": "Cien años de soledad",
+              "pages": 402,
+              "year": 1962,
+              "isbn": "123-456-7890-A1",
+              "author": "Gabriel Garcia Marquez"
+            },
+            "schema": {
+              "$ref": "#/definitions/Book"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "New Book is created",
+            "example": {
+              "application/json": {
+                "status": true,
+                "message": "Book created!"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/book/list": {
+      "get": {
+        "tags": ["Book"],
+        "description": "Returned all books created",
+        "responses": {
+          "200": {
+            "description": "All books are returned",
+            "content": {
+              "application/json": {
+                "example": {
+                  "description": "Response example",
+                  "status": true,
+                  "listBooks": []
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/book/{isbn}": {
+      "get": {
+        "tags": ["Book"],
+        "responses": {
+          "200": {
+            "description": "A book returned",
+            "example": {
+              "application/json": {
+                "status": true,
+                "bookByISBN": "object"
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "isbn",
+          "in": "path",
+          "required": true,
+          "description": "Book isbn to find",
+          "type": "string"
+        }
+      ]
+    },
+    "/book/delete/{isbn}": {
+      "delete": {
+        "tags": ["Book"],
+        "responses": {
+          "200": {
+            "description": "A book deleted",
+            "example": {
+              "application/json": {
+                "status": true,
+                "bookByISBN": "Book deleted!"
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "isbn",
+          "in": "path",
+          "required": true,
+          "description": "Book isbn to delete",
+          "type": "string"
+        }
+      ]
+    },
+    "/book/update/{isbn}": {
+      "put": {
+        "tags": ["Book"],
+        "parameters": [
+          {
+            "name": "book",
+            "in": "body",
+            "required": true,
+            "description": "Book to update",
+            "schema": {
+              "$ref": "#/definitions/Book"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A book updated",
+            "example": {
+              "application/json": {
+                "status": true,
+                "message": "Book updated!"
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "isbn",
+          "in": "path",
+          "required": true,
+          "description": "Book isbn to update",
+          "type": "string"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "Book": {
+      "required": ["title", "pages", "year", "isbn", "author"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "uniqueItems": false,
+          "example": "Cien años de soledad"
+        },
+        "pages": {
+          "type": "integer",
+          "example": 402
+        },
+        "year": {
+          "type": "integer",
+          "example": 1962
+        },
+        "isbn": {
+          "type": "string",
+          "uniqueItems": false,
+          "example": "123-456-7890-A1"
+        },
+        "author": {
+          "type": "string",
+          "example": "Gabriel Garcia Marquez"
+        }
+      }
+    }
+  }
+}
