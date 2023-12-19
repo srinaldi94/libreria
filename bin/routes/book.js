@@ -48,7 +48,4 @@ app.put('/book/update/:isbn', (req, res) => {
     res.json({status: true, message: message});
 });
 
-//test 
-
-
 module.exports = app;
